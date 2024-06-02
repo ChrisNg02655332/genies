@@ -1,10 +1,10 @@
-defmodule Genie.Openai.Thread do
+defmodule Genies.Openai.Thread do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Genie.Error
-  alias Genie.Openai.Thread
-  import Genie.Openai.Api
+  alias Genies.Error
+  alias Genies.Openai.Thread
+  import Genies.Openai.Api
 
   require Logger
 

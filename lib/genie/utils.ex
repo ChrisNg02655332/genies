@@ -1,22 +1,36 @@
-defmodule Genie.Utils do
-  @doc """
-  Translates an error message using gettext.
-  """
-  def translate_error({msg, opts}) do
-    # When using gettext, we typically pass the strings we want
-    # to translate as a static argument:
-    #
-    #     # Translate the number of files with plural rules
-    #     dngettext("errors", "1 file", "%{count} files", count)
-    #
-    # However the error messages in our forms and APIs are generated
-    # dynamically, so we need to translate them by calling Gettext
-    # with our gettext backend as first argument. Translations are
-    # available in the errors.po file (as we use the "errors" domain).
-    if count = opts[:count] do
-      Gettext.dngettext(LangChain.Gettext, "errors", msg, msg, count, opts)
-    else
-      Gettext.dgettext(LangChain.Gettext, "errors", msg, opts)
+defmodule Genies.Utils do
+  defp translate_error({msg, opts}) do
+    # Because the error messages we show in our forms and APIs
+    # are defined inside Ecto, we need to translate them dynamically.
+    Enum.reduce(opts, msg, fn {key, value}, acc ->
+      try do
+        String.replace(acc, "%{#{key}}", to_string(value))
+      rescue
+        e ->
+          IO.warn(
+            """
+            the fallback message translator for the form_field_error function cannot handle the given value.
+
+            Hint: you can set up the `error_translator_function` to route all errors to your application helpers:
+
+              config :genies, :error_translator_function, {MyAppWeb.ErrorHelpers, :translate_error}
+
+            Given value: #{inspect(value)}
+
+            Exception: #{Exception.message(e)}
+            """,
+            __STACKTRACE__
+          )
+
+          "invalid value"
+      end
+    end)
+  end
+
+  defp translator_from_config do
+    case Application.get_env(:genies, :error_translator_function) do
+      {module, function} -> &apply(module, function, [&1])
+      nil -> nil
     end
   end
 
@@ -24,7 +38,8 @@ defmodule Genie.Utils do
   Translates the errors for a field from a keyword list of errors.
   """
   def translate_errors(errors, field) when is_list(errors) do
-    for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
+    translate_error = translator_from_config() || (&translate_error/1)
+    for {^field, {msg, opts}} <- errors, do: translate_error.({msg, opts})
   end
 
   @doc """

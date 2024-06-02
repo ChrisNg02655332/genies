@@ -1,5 +1,5 @@
-defmodule Genie.Openai.Api do
-  alias Genie.Config
+defmodule Genies.Openai.Api do
+  alias Genies.Config
 
   @base_url "https://api.openai.com/v1"
   @receive_timeout 60_000

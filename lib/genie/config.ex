@@ -1,8 +1,8 @@
-defmodule Genie.Config do
+defmodule Genies.Config do
   def resolve(key, default \\ nil)
 
   def resolve(key, default) when is_atom(key) do
-    Application.get_env(:genie, key, default)
+    Application.get_env(:genies, key, default)
     |> expand_value()
   end
 

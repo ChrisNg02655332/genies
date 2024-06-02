@@ -1,4 +1,4 @@
-defmodule Genie.Openai.Assistant do
+defmodule Genies.Openai.Assistant do
   use Ecto.Schema
   import Ecto.Changeset
   require Logger
@@ -6,10 +6,10 @@ defmodule Genie.Openai.Assistant do
   @url "/assistants"
   @derive {Jason.Encoder, only: [:name, :model, :instructions, :tools, :file_ids]}
 
-  alias Genie.Error
+  alias Genies.Error
 
-  import Genie.Openai.Api
-  alias Genie.Openai.{Assistant, Tool}
+  import Genies.Openai.Api
+  alias Genies.Openai.{Assistant, Tool}
 
   @create_fields ~w(id model object created_at name description instructions file_ids metadata)a
   @required_fields ~w(model name instructions)a

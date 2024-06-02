@@ -6,7 +6,7 @@ defmodule Genie.MixProject do
 
   def project do
     [
-      app: :genie,
+      app: :genies,
       version: @version,
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,

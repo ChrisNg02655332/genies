@@ -1,6 +1,6 @@
-defmodule Genie.Error do
-  import Genie.Utils, only: [changeset_error_to_string: 1]
-  alias Genie.Error
+defmodule Genies.Error do
+  import Genies.Utils, only: [changeset_error_to_string: 1]
+  alias Genies.Error
 
   @type t :: %Error{}
   defexception [:message]

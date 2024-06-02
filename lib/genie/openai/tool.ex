@@ -1,4 +1,4 @@
-defmodule Genie.Openai.Tool do
+defmodule Genies.Openai.Tool do
   use Ecto.Schema
   import Ecto.Changeset
 
