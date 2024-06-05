@@ -1,7 +1,7 @@
 defmodule Genie.MixProject do
   use Mix.Project
 
-  @source_url "https://github.com/ChrisNg02655332/genie.git"
+  @source_url "https://github.com/ChrisNg02655332/genies.git"
   @version "0.0.1"
 
   def project do

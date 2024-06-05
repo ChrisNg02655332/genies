@@ -7,9 +7,10 @@ defmodule Genies.Openai.Assistant do
   @derive {Jason.Encoder, only: [:name, :model, :instructions, :tools, :file_ids]}
 
   alias Genies.Error
+  alias Genies.Openai.Assistant
+  alias Genies.Openai.Schema.Tool
 
   import Genies.Openai.Api
-  alias Genies.Openai.{Assistant, Tool}
 
   @create_fields ~w(id model object created_at name description instructions file_ids metadata)a
   @required_fields ~w(model name instructions)a
