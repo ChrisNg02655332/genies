@@ -2,7 +2,7 @@ defmodule Genie.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/ChrisNg02655332/genies.git"
-  @version "0.0.1"
+  @version "0.0.2"
 
   def project do
     [
@@ -12,7 +12,12 @@ defmodule Genie.MixProject do
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
-      deps: deps()
+      deps: deps(),
+      # Docs
+      name: "Genies",
+      source_url: "https://github.com/ChrisNg02655332/genies.git",
+      # homepage_url: "http://YOUR_PROJECT_HOMEPAGE",
+      docs: docs()
     ]
   end
 
@@ -27,7 +32,9 @@ defmodule Genie.MixProject do
   defp deps do
     [
       {:req, "~> 0.4.0"},
-      {:ecto, "~> 3.0"}
+      {:ecto, "~> 3.0"},
+      {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+      {:makeup_html, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 
@@ -43,6 +50,18 @@ defmodule Genie.MixProject do
       licenses: ["MIT"],
       links: %{"GitHub" => @source_url},
       files: ~w(mix.exs lib README.md LICENSE.md)
+    ]
+  end
+
+  defp docs() do
+    [
+      main: "readme",
+      logo: "logo.png",
+      name: "Genies",
+      source_ref: "v#{@version}",
+      canonical: "https://hexdocs.pm/genies",
+      source_url: @source_url,
+      extras: ["README.md"]
     ]
   end
 end

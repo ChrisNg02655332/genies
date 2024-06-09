@@ -58,9 +58,9 @@ defmodule Genies.Openai.Assistant do
     |> handle_response()
   end
 
-  def modify(assist_id, data) do
+  def modify(assist_id, attrs) do
     prepare(@url <> "/#{assist_id}")
-    |> Req.post(body: Jason.encode!(data))
+    |> Req.post(body: Jason.encode!(attrs))
     |> handle_response()
   end
 
