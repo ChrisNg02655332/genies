@@ -31,48 +31,6 @@ Note: you can load your os ENV variables in the configuration file, if you set a
 
 ⚠️`config.exs` is compile time, so the `get_env/1` function is executed during the build, if you want to get the env variables during runtime please use `runtime.exs` instead of `config.exs` in your application ([elixir doc ref](https://elixir-lang.org/getting-started/mix-otp/config-and-releases.html#configuration)).
 
-## Usage overview
-Get your API key from https://platform.openai.com/account/api-keys
-
-### retrieve(assistant_id)
-Retrieves an assistant by its id.
-  
-#### Example request
-```elixir
-Genies.Openai.Assistant.retrieve("asst_...")
-```
-#### Example response
-```elixir
-{:ok, %Assistant{}}
-```
-See: https://platform.openai.com/docs/api-reference/assistants/getAssistant
-
-### create(params)
-Creates a new assistant.
-
-#### Example request
-```elixir
-Genies.Openai.Assistant.create(%Assistant{})
-{:ok, %Assistant{}}
-```
-
-### modify(assistant_id, attrs)
-Modifies an existing assistant.
-
-#### Example request
-```elixir
-Genies.Openai.Assistant.modify(
-  "asst_...",
-  %{name: "My upgraded assistant"}
-)
-```
-
-#### Example response
-```elixir
-{:ok, %Assistant{}}
-```
-
-
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/genies>.

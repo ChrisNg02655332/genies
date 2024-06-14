@@ -1,4 +1,8 @@
 defmodule Genies.Openai.Assistant do
+  @moduledoc """
+  The Assistant context
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   require Logger
@@ -52,11 +56,34 @@ defmodule Genies.Openai.Assistant do
     |> validate_required(@required_fields)
   end
 
+  @doc """
+  Creates a new assistant.
+
+  See: https://platform.openai.com/docs/api-reference/assistants/createAssistant
+
+  ## Example request
+    
+    iex> create(%Assistant{})
+    {:ok, %Assistant{}}
+
+  """
   def create(%Assistant{} = attrs) do
     prepare(@url)
     |> Req.post(body: Jason.encode!(attrs))
     |> handle_response()
   end
+
+  @doc """
+  Modifies a single assistant.
+
+  See: https://platform.openai.com/docs/api-reference/assistants/modifyAssistant
+
+  ## Examples
+
+      iex> modify("asst_", attrs)
+      {:ok, %Assistant{}}
+
+  """
 
   def modify(assist_id, attrs) do
     prepare(@url <> "/#{assist_id}")
@@ -64,12 +91,39 @@ defmodule Genies.Openai.Assistant do
     |> handle_response()
   end
 
-  def retrieve(assist_id) do
-    prepare(@url <> "/#{assist_id}")
+  @doc """
+  Retrieves a single assistant.
+
+  See: https://platform.openai.com/docs/api-reference/assistants/getAssistant
+
+  ## Examples
+
+      iex> retrieve("asst_")
+      {:ok, %Assistant{}}
+
+  """
+  def retrieve(asst_id) do
+    prepare(@url <> "/#{asst_id}")
     |> Req.get()
     |> handle_response()
   end
 
+  @doc """
+  Gets a single assistant.
+
+  See: https://platform.openai.com/docs/api-reference/assistants/deleteAssistant
+
+  ## Examples
+
+      iex> delete("asst_")
+      {:ok, 
+        %{
+          "id": "asst_abc123",
+          "object": "assistant.deleted",
+          "deleted": true
+        }
+      }
+  """
   def delete(assist_id) do
     prepare(@url <> "/#{assist_id}")
     |> Req.delete()

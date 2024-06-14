@@ -1,4 +1,7 @@
 defmodule Genies.Openai.Chain do
+  @moduledoc """
+  The Chain context
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -70,6 +73,16 @@ defmodule Genies.Openai.Chain do
     chain
   end
 
+  @doc """
+  Runs a chain
+
+  ## Example
+    
+    iex> %{assistant_id: assistant.asst_id, thread_id: thread_id}
+          |> Chain.new!()
+          |> Chain.run()
+
+  """
   def run(%Chain{} = chain) do
     tools =
       chain.functions
@@ -80,7 +93,9 @@ defmodule Genies.Openai.Chain do
         }
       end)
 
-    Assistant.modify(chain.assistant_id, %{tools: tools})
+    if length(tools) > 0 do
+      Assistant.modify(chain.assistant_id, %{tools: tools})
+    end
 
     run = Thread.Run.create(chain.assistant_id, chain.thread_id)
     excute_run_fn(chain._function_map, run.thread_id, run.id)

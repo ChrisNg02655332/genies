@@ -1,4 +1,7 @@
 defmodule Genies.Openai.Thread do
+  @moduledoc """
+  The Thread context 
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -36,17 +39,57 @@ defmodule Genies.Openai.Thread do
     end
   end
 
+  @doc """
+  Creates a new thread.
+
+  See: https://platform.openai.com/docs/api-reference/threads/createThread
+
+  ## Example request
+    
+    iex> create(%{})
+    {:ok, %Thread{}}
+
+  """
   def create(attrs \\ %{}) do
     prepare(@url)
     |> Req.post(body: Jason.encode!(attrs))
     |> handle_response()
   end
 
+  @doc """
+  Retrieves a single thread.
+
+  See: https://platform.openai.com/docs/api-reference/threads/getThread
+
+  ## Example request
+    
+    iex> retrieve("thread_")
+    {:ok, %Thread{}}
+
+  """
   def retrieve(thread_id) do
     prepare(@url <> "/#{thread_id}")
     |> Req.get()
     |> handle_response()
   end
+
+  @doc """
+  Retrieves a single thread.
+
+  See: https://platform.openai.com/docs/api-reference/threads/deleteThread
+
+  ## Example request
+    
+    iex> delete("thread_")
+    {:ok, 
+      %{
+        "id": "asst_abc123",
+        "object": "assistant.deleted",
+        "deleted": true
+      }
+    }
+
+  """
 
   def delete(thread_id) do
     prepare(@url <> "/#{thread_id}")
