@@ -101,6 +101,9 @@ defmodule Genies.Openai.Chain do
     excute_run_fn(chain._function_map, run.thread_id, run.id)
   end
 
+  defp excute_run_fn(_, thread_id, run_id) when thread_id == nil or run_id == nil,
+    do: raise("Missing thread_id or run_id")
+
   defp excute_run_fn(function_map, thread_id, run_id) do
     Process.sleep(500)
     run = Thread.Run.retrieve(thread_id, run_id)

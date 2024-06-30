@@ -2,7 +2,7 @@ defmodule Genie.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/ChrisNg02655332/genies.git"
-  @version "0.0.2"
+  @version "0.0.3"
 
   def project do
     [
@@ -56,7 +56,7 @@ defmodule Genie.MixProject do
   defp docs() do
     [
       main: "readme",
-      logo: "logo.png",
+      # logo: "logo.png",
       name: "Genies",
       source_ref: "v#{@version}",
       canonical: "https://hexdocs.pm/genies",
